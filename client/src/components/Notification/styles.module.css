@@ -1,0 +1,15 @@
+/*.root {
+    background-color: var(--notification-color, var(--mantine-primary-color-filled));
+  }
+  
+.description, .title {
+    color: var(--mantine-color-white);
+}
+
+.closeButton {
+    color: var(--mantine-color-white);
+}
+
+.closeButton:hover {
+    color: var(--notification-color);
+}*/

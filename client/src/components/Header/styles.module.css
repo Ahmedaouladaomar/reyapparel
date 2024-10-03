@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.logo {
+  flex-basis: 33%;
+}
+
+.center {
+  flex-basis: 33%;
+  @media (max-width: $mobile) {
+    display: none;
+  }
+}
+
+.link {
+  color: black;
+  transition: all 0.3s ease-in-out;
+}
+
+.link[data-active] {
+  background-color: transparent;
+  color: gray;
+}
+
+.link:hover {
+  background-color: transparent;
+  color: gray;
+}
+
+.burger {
+  display: none;
+
+  @media (max-width: $mobile) {
+    display: block;
+  }
+}

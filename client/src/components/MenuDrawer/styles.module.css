@@ -1,0 +1,17 @@
+.item {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    color: gray;
+}
+
+.item:hover {
+    background-color: rgb(251, 251, 251);
+}
+
+.item[data-active] {
+    background-color: whitesmoke;
+}
+
+.shrink .section {
+    margin: 0;
+}

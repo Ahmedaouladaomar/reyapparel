@@ -1,0 +1,25 @@
+.media__container {
+  display: flex;
+  gap: 2rem;
+  padding: 10px 35px;
+  flex-basis: 60%;
+  @media (max-width: $laptop) {
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+}
+
+.slider {
+  width: 120px;
+  height: fit-content;
+  @media (max-width: $laptop) {
+    width: 80vw;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.slide {
+  cursor: pointer;
+}
