@@ -13,6 +13,7 @@ This project was built with the following technologies:
 - Passport JS
 - JWT
 - ReactJS
+- Firebase
 - MantineUI
 - PotsCSS
 - CSS modules
