@@ -52,11 +52,18 @@ export default function CartDrawer() {
   return (
     <>
       <Drawer
+        pos="relative"
         position="right"
         opened={opened}
         onClose={close}
         withCloseButton={false}
       >
+        <LoadingOverlay
+          visible={loading}
+          zIndex={1000}
+          overlayProps={{ opacity: 0.6 }}
+          loaderProps={{ children: " " }}
+        />
         <Flex
           className="absolute left-0 h-[95%] w-[100%]"
           direction="column"
@@ -74,7 +81,10 @@ export default function CartDrawer() {
               >
                 {items.map((item, index) => (
                   <CartItem
-                    key={generateHash(item.variant.id, item.variant.product.name)}
+                    key={generateHash(
+                      item.variant.id,
+                      item.variant.product.name
+                    )}
                     id={item.variant.id}
                     name={item.variant.product.name}
                     description={item.variant.product.description}
@@ -89,7 +99,7 @@ export default function CartDrawer() {
                   />
                 ))}
               </Flex>
-              <Divider my={5} />
+              <Divider my={0} />
               <CartFooter totalPrice={totalPrice} />
             </>
           ) : (

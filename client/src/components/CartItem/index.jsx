@@ -1,4 +1,12 @@
-import { ActionIcon, Flex, Image, NumberFormatter, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Flex,
+  Image,
+  LoadingOverlay,
+  NumberFormatter,
+  Text,
+} from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import imageErrorSrc from "@/images/image-not-found.png";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
@@ -19,6 +27,8 @@ export default function CartItem({
 }) {
   // items count
   const [itemCount, setItemCount] = useState();
+  // performing
+  const [performing, setPerforming] = useState(false);
 
   useEffect(() => {
     setItemCount(count);
@@ -29,6 +39,8 @@ export default function CartItem({
       // Return null
       return;
     }
+    // loading
+    setPerforming(true);
     // update state
     setItemCount(itemCount + 1);
     // request body
@@ -39,15 +51,23 @@ export default function CartItem({
       price: price,
     };
     // api call
-    call({ body: body, newPath: ADD_TO_CART, newMethod: PATCH, delayMs: 1000 });
+    await call({
+      body: body,
+      newPath: ADD_TO_CART,
+      newMethod: PATCH,
+    });
+    // loading
+    setPerforming(false);
   };
 
-  const onDecrement = () => {
+  const onDecrement = async () => {
     let newCount = itemCount - 1;
     // update state
     setItemCount(newCount);
     // check
     if (newCount > inStock) return;
+    // loading
+    setPerforming(true);
     // request body
     let body = {
       user: user,
@@ -55,17 +75,25 @@ export default function CartItem({
       price: price,
     };
     // api call
-    call({
+    await call({
       body: body,
       newPath: REMOVE_FROM_CART,
       newMethod: PATCH,
-      delayMs: 1000,
     });
+    // loading
+    setPerforming(false);
   };
 
   return (
     <div className={`flex gap-[20px]`}>
-      <Image className="min-w-[70px] w-[70px]" h={100} src={imageUrl ? imageUrl : imageErrorSrc} />
+      <Box pos="relative">
+        <LoadingOverlay visible={performing} zIndex={1000} />
+        <Image
+          className="min-w-[70px] w-[70px]"
+          h={100}
+          src={imageUrl ? imageUrl : imageErrorSrc}
+        />
+      </Box>
       <div className="section flex flex-col flex-1 justify-between">
         <div className="info">
           <Text className="title" size="lg" fw={700}>
@@ -85,19 +113,11 @@ export default function CartItem({
         <div className="flex flex-col gap-[5px]">
           <div className="total flex justify-between">
             <div className="items flex justify-between items-center border border-solid border-slate-300 rounded-sm h-[30px] w-[100px]">
-              <ActionIcon
-                variant="transparent"
-                onClick={onIncrement}
-                disabled={loading}
-              >
+              <ActionIcon variant="transparent" onClick={onIncrement}>
                 <IconPlus height={14} color="gray" />
               </ActionIcon>
               <Text>{itemCount}</Text>
-              <ActionIcon
-                variant="transparent"
-                onClick={onDecrement}
-                disabled={loading}
-              >
+              <ActionIcon variant="transparent" onClick={onDecrement}>
                 <IconMinus height={14} color="gray" />
               </ActionIcon>
             </div>
